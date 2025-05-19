@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>AP Style Quote Practice</title>
+
+  <style>
+
+    body { font-family: Arial, sans-serif; max-width: 700px; margin: auto; padding: 20px; }
+
+    textarea { width: 100%; height: 200px; font-size: 16px; margin-top: 10px; }
+
+    button { margin-top: 10px; margin-right: 10px; padding: 10px 15px; font-size: 16px; }
+
+    #feedback { margin-top: 20px; font-weight: bold; }
+
+    .good { color: green; }
+
+    .bad { color: red; }
+
+    ul { padding-left: 20px; }
+
+  </style>
+
+</head>
+
+<body>
+
+  <h2>📝 AP Style Quotation Practice</h2>
+
+
+
+  <h3>📘 Quick Rules for AP Style Quotes</h3>
+
+  <ul>
+
+    <li>Use double quotation marks: <code>“like this”</code></li>
+
+    <li>Put periods and commas inside the closing quotation mark</li>
+
+    <li>Attribution should follow the quote: <code>” said Johnson.</code></li>
+
+    <li>Only capitalize the first word of the quote if it's a full sentence</li>
+
+    <li>Avoid quote stacking (don’t use multiple quotes without explanation)</li>
+
+  </ul>
+
+
+
+  <h3>✍️ Your Practice Paragraph</h3>
+
+  <p>Write a short paragraph that includes at least one properly formatted AP-style quote.</p>
+
+  <textarea id="studentInput" placeholder="Example: “It was a great day,” said Jones."></textarea><br>
+
+
+
+  <button onclick="checkWriting()">Submit for Feedback</button>
+
+  <button onclick="retry()">Retry</button>
+
+  <button onclick="downloadResponse()">Download Response</button>
+
+
+
+  <div id="feedback"></div>
+
+
+
+  <script>
+
+    function checkWriting() {
+
+      const input = document.getElementById("studentInput").value.trim();
+
+      const feedback = document.getElementById("feedback");
+
+      let messages = [];
+
+
+
+      if (!input) {
+
+        feedback.innerHTML = "<span class='bad'>Please enter a paragraph to get feedback.</span>";
+
+        return;
+
+      }
+
+
+
+      const quoteCount = (input.match(/["“”]/g) || []).length;
+
+      if (quoteCount < 2) {
+
+        messages.push("<span class='bad'>Use at least one full quote with opening and closing marks.</span>");
+
+      } else {
+
+        messages.push("<span class='good'>✓ Quotation marks detected.</span>");
+
+      }
+
+
+
+      if (input.match(/["“”][,.!?]/)) {
+
+        messages.push("<span class='good'>✓ Correct: punctuation is inside the quotation marks.</span>");
+
+      } else if (input.match(/[,.!?]["“”]/)) {
+
+        messages.push("<span class='bad'>✗ Punctuation should go <strong>inside</strong> the quotation marks.</span>");
+
+      }
+
+
+
+      if (input.match(/(said|says|stated|asked|replied)\s+\w+/i)) {
+
+        messages.push("<span class='good'>✓ Proper attribution found (e.g., <i>said Johnson</i>).</span>");
+
+      } else {
+
+        messages.push("<span class='bad'>✗ Add attribution after the quote (e.g., <i>said Johnson</i>).</span>");
+
+      }
+
+
+
+      feedback.innerHTML = messages.join("<br>");
+
+    }
+
+
+
+    function retry() {
+
+      document.getElementById("studentInput").value = "";
+
+      document.getElementById("feedback").innerHTML = "";
+
+    }
+
+
+
+    function downloadResponse() {
+
+      const text = document.getElementById("studentInput").value.trim();
+
+      if (!text) {
+
+        alert("Please enter a response before downloading.");
+
+        return;
+
+      }
+
+
+
+      const blob = new Blob([text], { type: "text/plain" });
+
+      const link = document.createElement("a");
+
+      link.href = URL.createObjectURL(blob);
+
+      link.download = "AP_Style_Response.txt";
+
+      link.click();
+
+    }
+
+  </script>
+
+</body>
+
+</html>
