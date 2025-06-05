@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AP Style Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 15px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 25px;
+            border: 1px solid #ddd;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #0374B5;
+            padding-bottom: 15px;
+        }
+
+        .header h1 {
+            color: #0374B5;
+            font-size: 1.8em;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1em;
+        }
+
+        .progress-container {
+            margin-bottom: 25px;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #0374B5;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e1e1e1;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #0374B5;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .question-container {
+            margin-bottom: 25px;
+        }
+
+        .question-header {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            color: #0374B5;
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .original-sentence {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 15px;
+            font-size: 1em;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        .sentence-label {
+            font-weight: 600;
+            color: #856404;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .input-section {
+            margin-bottom: 20px;
+        }
+
+        .input-section label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .correction-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ced4da;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.2s ease;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .correction-input:focus {
+            outline: none;
+            border-color: #0374B5;
+            box-shadow: 0 0 0 2px rgba(3, 116, 181, 0.2);
+        }
+
+        .button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 0 8px;
+            display: inline-block;
+        }
+
+        .btn-submit {
+            background: #0374B5;
+            color: white;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            background: #025a8c;
+        }
+
+        .btn-submit:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .btn-next {
+            background: #28a745;
+            color: white;
+            display: none;
+        }
+
+        .btn-next:hover {
+            background: #218838;
+        }
+
+        .feedback {
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 20px;
+            display: none;
+            border: 1px solid;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+
+        .feedback h3 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .feedback p {
+            margin-bottom: 8px;
+        }
+
+        .feedback strong {
+            font-weight: 600;
+        }
+
+        .correct-answer {
+            background: rgba(40, 167, 69, 0.1);
+            padding: 12px;
+            border-radius: 4px;
+            margin: 10px 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .quiz-complete {
+            text-align: center;
+            display: none;
+            padding: 20px;
+        }
+
+        .quiz-complete h2 {
+            color: #0374B5;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .score {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #28a745;
+            margin: 15px 0;
+        }
+
+        .score-message {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .restart-btn {
+            background: #6f42c1;
+            color: white;
+            padding: 12px 30px;
+            font-size: 1em;
+        }
+
+        .restart-btn:hover {
+            background: #5a359a;
+        }
+
+        .instructions {
+            background: #e9ecef;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .instructions h3 {
+            color: #495057;
+            margin-bottom: 8px;
+            font-size: 1em;
+            font-weight: 600;
+        }
+
+        .instructions ul {
+            margin-left: 20px;
+            color: #6c757d;
+        }
+
+        .instructions li {
+            margin-bottom: 4px;
+        }
+
+        /* Canvas-specific adjustments */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .quiz-container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.5em;
+            }
+            
+            .btn {
+                display: block;
+                width: 100%;
+                margin: 8px 0;
+            }
+        }
+
+        /* Ensure compatibility with Canvas iframe */
+        html {
+            height: auto !important;
+        }
+
+        body {
+            height: auto !important;
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="header">
+            <h1>AP Style Practice</h1>
+            <p>Correct each sentence according to Associated Press style guidelines</p>
+        </div>
+
+        <div class="instructions">
+            <h3>Instructions:</h3>
+            <ul>
+                <li>Read each sentence carefully</li>
+                <li>Type your corrected version in the text box</li>
+                <li>Click "Check Answer" to see if you're correct</li>
+                <li>Review the explanation and AP style rule</li>
+                <li>Continue to the next question</li>
+            </ul>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-text" id="progressText">Question 1 of 5</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div id="quizContent">
+            <div class="question-container">
+                <div class="question-header">
+                    <div class="question-number" id="questionNumber">Question 1 of 5</div>
+                    <span class="sentence-label">Original sentence to correct:</span>
+                    <div class="original-sentence" id="originalSentence"></div>
+                </div>
+                
+                <div class="input-section">
+                    <label for="correctionInput">Your corrected sentence:</label>
+                    <textarea 
+                        id="correctionInput" 
+                        class="correction-input" 
+                        placeholder="Type your corrected sentence here..."
+                        aria-describedby="inputHelp"
+                    ></textarea>
+                    <small id="inputHelp" style="color: #6c757d;">Tip: Pay attention to capitalization, punctuation, and word usage.</small>
+                </div>
+
+                <div class="button-container">
+                    <button class="btn btn-submit" id="submitBtn" onclick="checkAnswer()">Check Answer</button>
+                    <button class="btn btn-next" id="nextBtn" onclick="nextQuestion()">Next Question</button>
+                </div>
+
+                <div class="feedback" id="feedback" role="alert"></div>
+            </div>
+        </div>
+
+        <div class="quiz-complete" id="quizComplete">
+            <h2>Quiz Complete!</h2>
+            <div class="score" id="finalScore">0/5</div>
+            <div class="score-message" id="scoreMessage"></div>
+            <button class="btn restart-btn" onclick="restartQuiz()">Take Quiz Again</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                original: "Early in the morning, the team swam laps in the pool.",
+                correct: "Early in the morning, the team swam laps in the pool.",
+                explanation: "This sentence is already correct! AP style doesn't require changes to this simple sentence structure.",
+                rule: "No correction needed - proper sentence structure and punctuation."
+            },
+            {
+                original: "At the April 12 meeting, the Stafford Education association passed a resolution that gives teachers a new fall break Sunday.",
+                correct: "At the April 12 meeting, the Stafford Education Association passed a resolution that gives teachers a new fall break on Sunday.",
+                explanation: "Two corrections needed: 1) 'Association' should be capitalized as part of the proper noun 'Stafford Education Association', and 2) Add 'on' before 'Sunday' for proper grammar.",
+                rule: "Capitalize proper nouns and use proper prepositions with days of the week."
+            },
+            {
+                original: "\"Please be sure to participate!\" National Honor Society president Hallie O'Brian shouted into the microphone.",
+                correct: "\"Please be sure to participate!\" National Honor Society President Hallie O'Brian shouted into the microphone.",
+                explanation: "In AP style, formal titles before names should be capitalized. 'President' should be capitalized when it directly precedes the person's name.",
+                rule: "Capitalize formal titles when they precede names."
+            },
+            {
+                original: "For your literature class, did you choose to read *To Kill a Mockingbird* or *Lord of the Flies*?",
+                correct: "For your literature class, did you choose to read \"To Kill a Mockingbird\" or \"Lord of the Flies\"?",
+                explanation: "AP style uses quotation marks, not italics, for book titles, movie titles, song titles, and other works.",
+                rule: "Use quotation marks (not italics) for titles of books, movies, songs, and other creative works."
+            },
+            {
+                original: "Sabrina Datolli, the mayor, and Michelle Obama, the First Lady, toured the memorial built to honor civil war veterans.",
+                correct: "Sabrina Datolli, the mayor, and Michelle Obama, the former first lady, toured the memorial built to honor Civil War veterans.",
+                explanation: "Three corrections: 1) 'First Lady' should be lowercase when used as a description rather than preceding a name, 2) Add 'former' since Michelle Obama is no longer the first lady, and 3) 'Civil War' should be capitalized as it refers to the specific American Civil War.",
+                rule: "Capitalize specific historical events; use lowercase for descriptive titles; ensure accuracy with current vs. former positions."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        function initQuiz() {
+            showQuestion();
+            updateProgress();
+        }
+
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('questionNumber').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+            document.getElementById('progressText').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+            document.getElementById('originalSentence').textContent = question.original;
+            document.getElementById('correctionInput').value = '';
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('submitBtn').style.display = 'inline-block';
+            document.getElementById('submitBtn').disabled = false;
+            document.getElementById('nextBtn').style.display = 'none';
+            answered = false;
+            
+            // Focus on input for better UX
+            setTimeout(() => {
+                document.getElementById('correctionInput').focus();
+            }, 100);
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function normalizeText(text) {
+            return text.trim()
+                      .replace(/\s+/g, ' ')
+                      .replace(/[""]/g, '"')
+                      .replace(/['']/g, "'")
+                      .toLowerCase();
+        }
+
+        function checkAnswer() {
+            if (answered) return;
+            
+            const userAnswer = document.getElementById('correctionInput').value.trim();
+            if (!userAnswer) {
+                alert('Please enter your correction before checking the answer.');
+                return;
+            }
+
+            const question = questions[currentQuestion];
+            const userNormalized = normalizeText(userAnswer);
+            const correctNormalized = normalizeText(question.correct);
+            
+            const isCorrect = userNormalized === correctNormalized;
+            
+            const feedback = document.getElementById('feedback');
+            
+            if (isCorrect) {
+                score++;
+                feedback.className = 'feedback correct';
+                feedback.innerHTML = `
+                    <h3>✓ Correct!</h3>
+                    <p><strong>Explanation:</strong> ${question.explanation}</p>
+                    <p><strong>AP Style Rule:</strong> ${question.rule}</p>
+                `;
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.innerHTML = `
+                    <h3>✗ Not quite right</h3>
+                    <p><strong>Your answer:</strong> ${userAnswer}</p>
+                    <div class="correct-answer">
+                        <strong>Correct answer:</strong> ${question.correct}
+                    </div>
+                    <p><strong>Explanation:</strong> ${question.explanation}</p>
+                    <p><strong>AP Style Rule:</strong> ${question.rule}</p>
+                `;
+            }
+            
+            feedback.style.display = 'block';
+            feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'inline-block';
+            answered = true;
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            updateProgress();
+            
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quizContent').style.display = 'none';
+            document.getElementById('quizComplete').style.display = 'block';
+            document.getElementById('finalScore').textContent = `${score}/${questions.length}`;
+            document.getElementById('progressFill').style.width = '100%';
+            document.getElementById('progressText').textContent = 'Complete!';
+            
+            let message = '';
+            const percentage = (score / questions.length) * 100;
+            
+            if (percentage >= 90) {
+                message = 'Excellent work! You have a strong grasp of AP style rules.';
+            } else if (percentage >= 70) {
+                message = 'Good job! You understand most AP style conventions.';
+            } else if (percentage >= 50) {
+                message = 'Not bad! Review the explanations and try again to improve.';
+            } else {
+                message = 'Keep practicing! AP style takes time to master.';
+            }
+            
+            document.getElementById('scoreMessage').textContent = message;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('quizComplete').style.display = 'none';
+            initQuiz();
+        }
+
+        // Allow Enter key to submit answer (Ctrl+Enter to avoid accidental submission)
+        document.getElementById('correctionInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.ctrlKey && !answered) {
+                e.preventDefault();
+                checkAnswer();
+            }
+        });
+
+        // Initialize quiz when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initQuiz();
+        });
+
+        // Canvas compatibility: Auto-resize iframe height
+        function resizeIframe() {
+            const height = document.body.scrollHeight;
+            if (window.parent && window.parent.postMessage) {
+                window.parent.postMessage({
+                    type: 'canvas_resize',
+                    height: height
+                }, '*');
+            }
+        }
+
+        // Resize on content changes
+        new MutationObserver(resizeIframe).observe(document.body, {
+            childList: true,
+            subtree: true,
+            attributes: true
+        });
+
+        // Initial resize
+        window.addEventListener('load', resizeIframe);
+    </script>
+</body>
+</html>
