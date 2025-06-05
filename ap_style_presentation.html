@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AP Style Guide for Journalism Students</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header p {
+            font-size: 1.3em;
+            color: #666;
+            font-style: italic;
+        }
+
+        .navigation {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            color: #1e3c72;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-btn:hover {
+            background: #1e3c72;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn.active {
+            background: #1e3c72;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            display: none;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            font-size: 2.5em;
+            color: #1e3c72;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #1e3c72, #2a5298);
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        .rule-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left: 5px solid #1e3c72;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        .rule-title {
+            font-weight: bold;
+            font-size: 1.3em;
+            color: #1e3c72;
+            margin-bottom: 15px;
+        }
+
+        .examples {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 2px solid #e9ecef;
+        }
+
+        .correct {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .incorrect {
+            color: #dc3545;
+            font-weight: bold;
+            text-decoration: line-through;
+        }
+
+        .example-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .quiz-container {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 2px solid #ffc1c1;
+        }
+
+        .quiz-question {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: #f0f0f0;
+            border-color: #1e3c72;
+        }
+
+        .quiz-option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+
+        .quiz-option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .tip-box strong {
+            color: #856404;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-btn {
+                width: 80%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AP Style Guide</h1>
+            <p>Essential Rules for Journalism Students</p>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-btn active" onclick="showSection('title-case')">Title Case</button>
+            <button class="nav-btn" onclick="showSection('abbreviations')">Abbreviations</button>
+            <button class="nav-btn" onclick="showSection('compositions')">Books & Periodicals</button>
+            <button class="nav-btn" onclick="showSection('dates')">Dates & Times</button>
+            <button class="nav-btn" onclick="showSection('dimensions')">Dimensions</button>
+            <button class="nav-btn" onclick="showSection('names')">Names</button>
+            <button class="nav-btn" onclick="showSection('numerals')">Numerals</button>
+            <button class="nav-btn" onclick="showSection('quiz')">Practice Quiz</button>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <!-- Title Case Section -->
+        <div id="title-case" class="section active">
+            <h2>Title Case</h2>
+            
+            <div class="rule-box">
+                <div class="rule-title">Basic Rule</div>
+                <p>Capitalize the first word, last word, and all major words (nouns, pronouns, verbs, adverbs, adjectives) in titles. Do not capitalize articles (a, an, the), coordinating conjunctions (and, but, or, nor, for, so, yet), or prepositions of three letters or fewer (in, on, at, by, for, etc.).</p>
+            </div>
+
+            <div class="examples">
+                <h3>Examples:</h3>
+                <div class="example-item">
+                    <span class="correct">✓ "The Art of War"</span><br>
+                    <span class="incorrect">✗ "The Art Of War"</span>
+                </div>
+                <div class="example-item">
+                    <span class="correct">✓ "Gone with the Wind"</span><br>
+                    <span class="incorrect">✗ "Gone With The Wind"</span>
+                </div>
+                <div class="example-item">
+                    <span class="correct">✓ "One Flew Over the Cuckoo's Nest"</span><br>
+                    <span class="incorrect">✗ "One Flew over the Cuckoo's nest"</span>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>Pro Tip:</strong> Always capitalize the first and last words, regardless of what they are. Prepositions of four or more letters should be capitalized (Through, Between, Among).
+            </div>
+        </div>
+
+        <!-- Abbreviations Section -->
+        <div id="abbreviations" class="section">
+            <h2>Abbreviations and Acronyms</h2>
+            
+            <div class="rule-box">
+                <div class="rule-title">General Rule</div>
+                <p>Spell out most abbreviations on first reference, followed by the abbreviation in parentheses. Use the abbreviation on subsequent references.</p>
+            </div>
+
+            <div class="examples">
+                <h3>Examples:</h3>
+                <div class="example-item">
+                    <span class="correct">✓ First reference: "The Federal Bureau of Investigation (FBI) announced..."</span><br>
+                    <span class="correct">✓ Second reference: "The FBI said..."</span>
+                </div>
+            </div>
+
+            <div class="rule-box">
+                <div class="rule-title">Common Exceptions (No Periods)</div>
+                <p>FBI, CIA, NFL, NBA, MLB, UN, US (as adjective), TV, DVD, GPS, CEO, CFO, PhD</p>
+            </div>
+
+            <div class="rule-box">
+                <div class="rule-title">State Abbreviations</div>
+                <p>Use postal abbreviations only in lists, tabular material, and addresses. In text, spell out state names or use AP state abbreviations.</p>
+            </div>
+
+            <div class="examples">
+                <h3>State Examples:</h3>
+                <div class="example-item">
+                    <span class="correct">✓ "Boston, Mass." (in datelines)</span><br>
+                    <span class="correct">✓ "Boston, Massachusetts" (in text)</span><br>
+                    <span class="incorrect">✗ "Boston, MA" (in text)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Books and Periodicals Section -->
+        <div id="compositions" class="section">
+            <h2>Books, Periodicals & Compositions</h2>
+            
+            <div class="rule-box">
+                <div class="rule-title">Books, Movies, TV Shows, Albums</div>
+                <p>Use quotation marks around titles of books, movies, TV shows, songs, poems, and other compositions.</p>
+            </div>
+
+            <div class="examples">
+                <h3>Examples:</h3>
+                <div class="example-item">
+                    <span class="correct">✓ "To Kill a Mockingbird"</span><br>
+                    <span class="correct">✓ "The New York Times"</span><br>
+                    <span class="correct">✓ "60 Minutes"</span><br>
+                    <span class="correct">✓ "Bohemian Rhapsody"</span>
+                </div>
+            </div>
+
+            <div class="rule-box">
+                <div class="rule-title">Newspapers and Magazines</div>
+                <p>Use quotation marks around newspaper and magazine names. Do not use "The" unless it's part of the official name.</p>
+            </div>
+
+            <div class="examples">
+                <h3>Publication Examples:</h3>
+                <div class="example-item">
+                    <span class="correct">✓ "Washington Post"</span><br>
+                    <span class="incorrect">✗ "The Washington Post"</span>
+                </div>
+                <div class="example-item">
+                    <span class="correct">✓ "The New York Times" (official name includes "The")</span>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>Remember:</strong> AP Style uses quotation marks instead of italics for most titles, unlike other style guides.
+            </div>
+        </div>
+
+        <!-- Dates and Times Section -->
+        <div id="dates" class="section">
+            <h2>Dates, Months, Years & Times</h2>
+            
+            <div class="rule-box">
+                <div class="rule-title">Months</div>
+                <p>Abbreviate months with six or more letters when used with a specific date. Always spell out March, April, May, June, July.</p>
+            </div>
+
+            <div class="examples">
+                <h3>Month Examples:</h3>
+                <div class="example-item">
+                    <span class="correct">✓ Jan. 15, 2024</span><br>
+                    <span class="correct">✓ March 15, 2024</span><br>
+                    <span class="correct">✓ May 2024</span><br>
+                    <span class="incorrect">✗ Mar. 15, 2024</span>
+                </div>
+            </div>
+
+            <div class="rule-box">
+                <div class="rule-title">Days of the Week</div>
+                <p>Abbreviate days of the week only in tabular material: Mon, Tue, Wed, Thu, Fri, Sat, Sun</p>
+            </div>
+
+            <div class="rule-box">
+                <div class="rule-title">Times</div>
+                <p>Use figures for times. Use a.m. and p.m. (lowercase with periods). Avoid redundant "o'clock."</p>
+            </div>
+
+            <div class="examples">
+                <h3>Time Examples:</h3>
+                <div class="example-item">
+                    <span class="correct">✓ 8 a.m.</span><br>
+                    <span class="correct">✓ 6:30 p.m.</span><br>
+                    <span class="correct">✓ noon</span><br>
+                    <span class="correct">✓ midnight</span><br>
+                    <span class="incorrect">✗ 8:00 a.m.</span><br>
+                    <span class="incorrect">✗ 8 o'clock a.m.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dimensions Section -->
+        <div id="dimensions" class="section">
+            <h2>Dimensions</h2>
+            
+            <div class="rule-box">
+                <div class="rule-title">Basic Rule</div>
+                <p>Use figures and spell out inches, feet, yards, etc. Hyphenate when used as adjectives before a noun.</p>
+            </div>
+
+            <div class="examples">
+                <h3>Examples:</h3>
+                <div class="example-item">
+                    <span class="correct">✓ The room is 9 feet by 12 feet.</span><br>
+                    <span class="correct">✓ He is 6 feet tall.</span><br>
+                    <span class="correct">✓ A 6-foot-tall man</span><br>
+                    <span class="correct">✓ A 9-by-12 room</span>
+                </div>
+            </div>
+
+            <div class="rule-box">
+                <div class="rule-title">Abbreviations in Technical Copy</div>
+                <p>In technical or scientific contexts, you may use abbreviations: ft., in., yd., etc.</p>
+            </div>
+
+            <div class="tip-box">
+                <strong>Key Point:</strong> Hyphenate compound adjectives but not when the dimension follows the verb.
+            </div>
+        </div>
+
+        <!-- Names Section -->
+        <div id="names" class="section">
+            <h2>Names</h2>
+            
+            <div class="rule-box">
+                <div class="rule-title">First Reference</div>
+                <p>Use full names on first reference. For adults, use courtesy titles (Mr., Ms., Mrs.) only in direct quotations or when specifically requested.</p>
+            </div>
+
+            <div class="examples">
+                <h3>Examples:</h3>
+                <div class="example-item">
+                    <span class="correct">✓ First reference: "John Smith said..."</span><br>
+                    <span class="correct">✓ Second reference: "Smith said..."</span>
+                </div>
+            </div>
+
+            <div class="rule-box">
+                <div class="rule-title">Professional Titles</div>
+                <p>Capitalize formal titles when they appear before names. Lowercase when they appear after names or are used alone.</p>
+            </div>
+
+            <div class="examples">
+                <h3>Title Examples:</h3>
+                <div class="example-item">
+                    <span class="correct">✓ President Joe Biden</span><br>
+                    <span class="correct">✓ Joe Biden, president of the United States</span><br>
+                    <span class="correct">✓ The president said...</span>
+                </div>
+            </div>
+
+            <div class="rule-box">
+                <div class="rule-title">Ages</div>
+                <p>Always use figures for ages. Use hyphens for ages used as adjectives before a noun.</p>
+            </div>
+
+            <div class="examples">
+                <h3>Age Examples:</h3>
+                <div class="example-item">
+                    <span class="correct">✓ John Smith, 45, said...</span><br>
+                    <span class="correct">✓ The 16-year-old student</span><br>
+                    <span class="correct">✓ She is 16 years old</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Numerals Section -->
+        <div id="numerals" class="section">
+            <h2>Numerals</h2>
+            
+            <div class="rule-box">
+                <div class="rule-title">Basic Rule</div>
+                <p>Spell out numbers one through nine. Use figures for 10 and above.</p>
+            </div>
+
+            <div class="examples">
+                <h3>Examples:</h3>
+                <div class="example-item">
+                    <span class="correct">✓ three cats</span><br>
+                    <span class="correct">✓ 15 dogs</span><br>
+                    <span class="correct">✓ nine people</span><br>
+                    <span class="correct">✓ 10 cars</span>
+                </div>
+            </div>
+
+            <div class="rule-box">
+                <div class="rule-title">Exceptions - Always Use Figures</div>
+                <p>Ages, dates, dimensions, percentages, temperatures, times, votes, years, money, addresses, highways</p>
+            </div>
+
+            <div class="examples">
+                <h3>Exception Examples:</h3>
+                <div class="example-item">
+                    <span class="correct">✓ 5 years old</span><br>
+                    <span class="correct">✓ 3 percent</span><br>
+                    <span class="correct">✓ 8 a.m.</span><br>
+                    <span class="correct">✓ $5</span><br>
+                    <span class="correct">✓ 7 degrees</span>
+                </div>
+            </div>
+
+            <div class="rule-box">
+                <div class="rule-title">Large Numbers</div>
+                <p>Use million, billion, trillion for large round numbers. Mix figures and words for clarity.</p>
+            </div>
+
+            <div class="examples">
+                <h3>Large Number Examples:</h3>
+                <div class="example-item">
+                    <span class="correct">✓ $2.5 million</span><br>
+                    <span class="correct">✓ 1.2 billion people</span><br>
+                    <span class="incorrect">✗ $2,500,000</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div id="quiz" class="section">
+            <h2>Practice Quiz</h2>
+            
+            <div class="quiz-container" id="quiz1">
+                <div class="quiz-question">1. Which title is correctly formatted in AP Style?</div>
+                <div class="quiz-options">
+                    <div class="quiz-option" data-correct="false">"Gone With The Wind"</div>
+                    <div class="quiz-option" data-correct="true">"Gone with the Wind"</div>
+                    <div class="quiz-option" data-correct="false">"gone with the wind"</div>
+                </div>
+            </div>
+
+            <div class="quiz-container" id="quiz2">
+                <div class="quiz-question">2. How should you write the time 8:00 AM in AP Style?</div>
+                <div class="quiz-options">
+                    <div class="quiz-option" data-correct="false">8:00 a.m.</div>
+                    <div class="quiz-option" data-correct="true">8 a.m.</div>
+                    <div class="quiz-option" data-correct="false">8 AM</div>
+                </div>
+            </div>
+
+            <div class="quiz-container" id="quiz3">
+                <div class="quiz-question">3. Which number usage is correct in AP Style?</div>
+                <div class="quiz-options">
+                    <div class="quiz-option" data-correct="false">He bought 8 apples</div>
+                    <div class="quiz-option" data-correct="true">He bought eight apples</div>
+                    <div class="quiz-option" data-correct="false">The five-year-old boy</div>
+                </div>
+            </div>
+
+            <div class="quiz-container" id="quiz4">
+                <div class="quiz-question">4. How should you abbreviate March in a date?</div>
+                <div class="quiz-options">
+                    <div class="quiz-option" data-correct="false">Mar. 15, 2024</div>
+                    <div class="quiz-option" data-correct="true">March 15, 2024</div>
+                    <div class="quiz-option" data-correct="false">March. 15, 2024</div>
+                </div>
+            </div>
+
+            <div id="quiz-results" style="display: none; text-align: center; margin-top: 30px;">
+                <h3>Quiz Complete!</h3>
+                <p id="score-display"></p>
+                <button onclick="resetQuiz()" style="background: #1e3c72; color: white; border: none; padding: 12px 24px; border-radius: 25px; cursor: pointer; margin-top: 15px;">Retake Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 'title-case';
+        let quizAnswered = {1: false, 2: false, 3: false, 4: false};
+        let quizScore = 0;
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            currentSection = sectionId;
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const sections = ['title-case', 'abbreviations', 'compositions', 'dates', 'dimensions', 'names', 'numerals', 'quiz'];
+            const currentIndex = sections.indexOf(currentSection);
+            const progress = ((currentIndex + 1) / sections.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        // Quiz functionality
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const container = this.closest('.quiz-container');
+                const quizId = parseInt(container.id.replace('quiz', ''));
+                
+                if (quizAnswered[quizId]) return;
+                
+                const isCorrect = this.dataset.correct === 'true';
+                
+                // Color all options
+                container.querySelectorAll('.quiz-option').forEach(opt => {
+                    if (opt.dataset.correct === 'true') {
+                        opt.classList.add('correct');
+                    } else {
+                        opt.classList.add('incorrect');
+                    }
+                });
+                
+                quizAnswered[quizId] = true;
+                
+                if (isCorrect) {
+                    quizScore++;
+                }
+                
+                // Check if all questions answered
+                if (Object.values(quizAnswered).every(answered => answered)) {
+                    setTimeout(() => {
+                        showQuizResults();
+                    }, 1000);
+                }
+            });
+        });
+
+        function showQuizResults() {
+            const percentage = (quizScore / 4) * 100;
+            let message = '';
+            
+            if (percentage >= 90) {
+                message = `Excellent! You scored ${quizScore}/4 (${percentage}%). You've mastered AP Style basics!`;
+            } else if (percentage >= 70) {
+                message = `Good job! You scored ${quizScore}/4 (${percentage}%). Keep practicing!`;
+            } else {
+                message = `You scored ${quizScore}/4 (${percentage}%). Review the material and try again!`;
+            }
+            
+            document.getElementById('score-display').textContent = message;
+            document.getElementById('quiz-results').style.display = 'block';
+        }
+
+        function resetQuiz() {
+            quizAnswered = {1: false, 2: false, 3: false, 4: false};
+            quizScore = 0;
+            
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.classList.remove('correct', 'incorrect');
+            });
+            
+            document.getElementById('quiz-results').style.display = 'none';
+        }
+
+        // Initialize progress bar
+        updateProgress();
+    </script>
+</body>
+</html>
